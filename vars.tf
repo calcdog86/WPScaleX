@@ -1,5 +1,7 @@
-variable "AWS_REGION" {    
-    default = "eu-central-1"
+variable "AWS_REGION" {
+  description = "Die AWS-Region"
+  type        = string
+  default     = "eu-central-1"
 }
 
 variable "vpc_cidr_block" {

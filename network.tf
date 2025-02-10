@@ -55,7 +55,7 @@ resource "aws_security_group" "ssh-allowed" {
     }
 }
 
-variable "AMI" {
+/*variable "AMI" {
     type = "map"
     
     default = {
@@ -63,4 +63,4 @@ variable "AMI" {
         us-east-1 = "ami-0c2a1acae6667e438"
         eu-central-1 = "ami-02ccbe126fe6afe82"
     }
-}
+}*/

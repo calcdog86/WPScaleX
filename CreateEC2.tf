@@ -6,9 +6,9 @@ terraform {
     }
   }
 }
-provider "aws" {
+/*provider "aws" {
   region = "{var.AWS_REGION}" 
-}
+}*/
 
 /*resource "aws_instance" "example" {
   ami           = "ami-099da3ad959447ffa"

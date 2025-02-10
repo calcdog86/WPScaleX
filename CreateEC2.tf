@@ -1,4 +1,4 @@
-/*terraform {
+terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
@@ -10,7 +10,7 @@ provider "aws" {
   region = "{var.AWS_REGION}" 
 }
 
-resource "aws_instance" "example" {
+/*resource "aws_instance" "example" {
   ami           = "ami-099da3ad959447ffa"
   instance_type = "t2.micro"
 

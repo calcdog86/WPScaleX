@@ -1,6 +1,6 @@
 resource "aws_internet_gateway" "prod-igw" {
     vpc_id = "${aws_vpc.prod-vpc.id}"
-    tags {
+    tags = {
         Name = "prod-igw"
     }
 }
@@ -15,7 +15,7 @@ resource "aws_route_table" "prod-public-crt" {
         gateway_id = "${aws_internet_gateway.prod-igw.id}" 
     }
     
-    tags {
+    tags  = {
         Name = "prod-public-crt"
     }
 }
@@ -50,7 +50,7 @@ resource "aws_security_group" "ssh-allowed" {
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
-    tags {
+    tags = {
         Name = "ssh-allowed"
     }
 }
@@ -58,9 +58,9 @@ resource "aws_security_group" "ssh-allowed" {
 variable "AMI" {
     type = "map"
     
-    default {
-        eu-central-1 = "ami-02ccbe126fe6afe82"
+    default = {
         eu-west-2 = "ami-03dea29b0216a1e03"
         us-east-1 = "ami-0c2a1acae6667e438"
+        eu-central-1 = "ami-02ccbe126fe6afe82"
     }
 }

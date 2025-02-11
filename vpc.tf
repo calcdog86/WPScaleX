@@ -30,7 +30,7 @@ resource "aws_subnet" "webSub2" {
 
 resource "aws_subnet" "webSub3" {
     vpc_id = "${aws_vpc.webVPC.id}"
-    cidr_block = var.subnet_1_cidr
+    cidr_block = var.subnet_3_cidr
     map_public_ip_on_launch = true //it makes this a public subnet
     availability_zone = var.subnet_3_az
     tags = {

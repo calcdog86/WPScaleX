@@ -1,5 +1,4 @@
 resource "aws_db_subnet_group" "rdsSub" {
-    name = "rdsSub"
     subnet_ids = [aws_subnet.webSub1.id, aws_subnet.webSub2.id, aws_subnet.webSub3.id]
 
     tags = {

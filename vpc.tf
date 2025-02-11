@@ -1,20 +1,39 @@
-resource "aws_vpc" "prod-vpc" {
-    cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "webVPC" {
+    cidr_block = "${vpc_cidr_block}"
     enable_dns_support = true #gives you an internal domain name
     enable_dns_hostnames = true #gives you an internal host name
     instance_tenancy = "default"    
     tags = {
-        Name = "prod-vpc"
+        Name = "webVPC"
     }
 }
 
-resource "aws_subnet" "prod-subnet-public-1" {
-    vpc_id = "${aws_vpc.prod-vpc.id}"
-    cidr_block = "10.0.1.0/24"
+resource "aws_subnet" "webSub1" {
+    vpc_id = "${aws_vpc.webVPC.id}"
+    cidr_block = "${subnet_1_cidr}"
     map_public_ip_on_launch = true //it makes this a public subnet
-    availability_zone = "eu-central-1a"
+    availability_zone = "${subnet_1_az}"
     tags = {
-        Name = "prod-subnet-public-1"
+        Name = "webSub1"
     }
 }
 
+resource "aws_subnet" "webSub2" {
+    vpc_id = "${aws_vpc.webVPC.id}"
+    cidr_block = "${subnet_2_cidr}"
+    map_public_ip_on_launch = true //it makes this a public subnet
+    availability_zone = "${subnet_2_az}"
+    tags = {
+        Name = "webSub2"
+    }
+}
+
+resource "aws_subnet" "webSub3" {
+    vpc_id = "${aws_vpc.webVPC.id}"
+    cidr_block = "${subnet_1_cidr}"
+    map_public_ip_on_launch = true //it makes this a public subnet
+    availability_zone = "${subnet_3_az}"
+    tags = {
+        Name = "webSub3"
+    }
+}

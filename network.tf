@@ -1,32 +1,42 @@
-resource "aws_internet_gateway" "prod-igw" {
-    vpc_id = "${aws_vpc.prod-vpc.id}"
+resource "aws_internet_gateway" "webIG" {
+    vpc_id = "${aws_vpc.webVPC.id}"
     tags = {
-        Name = "prod-igw"
+        Name = "webIG"
     }
 }
 
-resource "aws_route_table" "prod-public-crt" {
-    vpc_id = "${aws_vpc.prod-vpc.id}"
+resource "aws_route_table" "webRoute" {
+    vpc_id = "${aws_vpc.webVPC.id}"
     
     route {
         //associated subnet can reach everywhere
         cidr_block = "0.0.0.0/0" 
         //CRT uses this IGW to reach internet
-        gateway_id = "${aws_internet_gateway.prod-igw.id}" 
+        gateway_id = "${aws_internet_gateway.webIG.id}" 
     }
     
     tags  = {
-        Name = "prod-public-crt"
+        Name = "webRoute"
     }
 }
 
 resource "aws_route_table_association" "prod-crta-public-subnet-1"{
-    subnet_id = "${aws_subnet.prod-subnet-public-1.id}"
-    route_table_id = "${aws_route_table.prod-public-crt.id}"
+    subnet_id = "${aws_subnet.webSub1.id}"
+    route_table_id = "${aws_route_table.webRoute.id}"
 }
 
-resource "aws_security_group" "ssh-allowed" {
-    vpc_id = "${aws_vpc.prod-vpc.id}"
+resource "aws_route_table_association" "prod-crta-public-subnet-1"{
+    subnet_id = "${aws_subnet.webSub2.id}"
+    route_table_id = "${aws_route_table.webRoute.id}"
+}
+
+resource "aws_route_table_association" "prod-crta-public-subnet-1"{
+    subnet_id = "${aws_subnet.webSub2.id}"
+    route_table_id = "${aws_route_table.webRoute.id}"
+}
+
+resource "aws_security_group" "webSG" {
+    vpc_id = "${aws_vpc.webVPC.id}"
     
     egress {
         from_port = 0
@@ -43,15 +53,22 @@ resource "aws_security_group" "ssh-allowed" {
         // Put your office or home address in it!
         cidr_blocks = ["0.0.0.0/0"]
     }
-    //If you do not add this rule, you can not reach the NGIX  
+    
     ingress {
         from_port = 80
         to_port = 80
         protocol = "tcp"
         cidr_blocks = ["0.0.0.0/0"]
     }
+
+    ingress {
+        from_port = 443
+        to_port = 443
+        protocol = "tcp"
+        cidr_blocks = ["0.0.0.0/0"]
+    }
     tags = {
-        Name = "ssh-allowed"
+        Name = "webSG"
     }
 }
 

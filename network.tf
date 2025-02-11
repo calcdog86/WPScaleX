@@ -25,13 +25,13 @@ resource "aws_route_table_association" "prod-crta-public-subnet-1"{
     route_table_id = "${aws_route_table.webRoute.id}"
 }
 
-resource "aws_route_table_association" "prod-crta-public-subnet-1"{
+resource "aws_route_table_association" "prod-crta-public-subnet-2"{
     subnet_id = "${aws_subnet.webSub2.id}"
     route_table_id = "${aws_route_table.webRoute.id}"
 }
 
-resource "aws_route_table_association" "prod-crta-public-subnet-1"{
-    subnet_id = "${aws_subnet.webSub2.id}"
+resource "aws_route_table_association" "prod-crta-public-subnet-3"{
+    subnet_id = "${aws_subnet.webSub3.id}"
     route_table_id = "${aws_route_table.webRoute.id}"
 }
 

@@ -1,6 +1,6 @@
 resource "aws_launch_template" "TemplateForAutoScaling" {
   name_prefix   = "TemplateForAutoScaling"
-  image_id      = "ami-0c55b159cbfafe1f0" # Amazon Linux 2
+  image_id      = "ami-099da3ad959447ffa" # Amazon Linux 2
   instance_type = "t3.micro"
 
   network_interfaces {

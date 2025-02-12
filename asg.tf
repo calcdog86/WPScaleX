@@ -4,7 +4,7 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
   instance_type = "t3.micro"
 
   network_interfaces {
-    security_groups = [aws_security_group.ec2_sg.id]
+    security_groups = [aws_security_group.webSG.id]
   }
 
   user_data = base64encode(<<-EOF

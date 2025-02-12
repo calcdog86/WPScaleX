@@ -10,7 +10,7 @@ resource "aws_lb" "webBalancer" {
     internal            = false
     load_balancer_type  = "application"
     security_groups     = [aws_security_group.webSG.id]
-    subnets             = [aws_subnet.public_1.id, aws_subnet.public_2.id]
+    subnets             = [aws_subnet.webSub1.id, aws_subnet.webSub2.id, aws_subnet.webSub3.id]
 
     tags = {
         Name = "webBalancer"

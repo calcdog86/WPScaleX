@@ -9,11 +9,29 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    echo "Hello, World!" > /var/www/html/index.html
-    amazon-linux-extras enable nginx1
-    yum install -y nginx
-    systemctl start nginx
-    systemctl enable nginx
+    yum update -y
+    amazon-linux-extras enable php8.0
+    yum install -y php php-mysqlnd httpd mariadb
+
+    systemctl enable httpd
+    systemctl start httpd
+
+    cd /var/www/html
+    wget https://wordpress.org/latest.tar.gz
+    tar -xzf latest.tar.gz
+    mv wordpress/* .
+    rm -rf wordpress latest.tar.gz
+
+    cp wp-config-sample.php wp-config.php
+    sed -i "s/database_name_here/${aws_db_instance.wordpressDB.db_name}/" wp-config.php
+    sed -i "s/username_here/admin/" wp-config.php
+    sed -i "s/password_here/admin1234}/" wp-config.php
+    sed -i "s/localhost/${aws_db_instance.wordpressDB.address}/" wp-config.php
+
+    chown -R apache:apache /var/www/html
+    chmod -R 755 /var/www/html
+
+    systemctl restart httpd
   EOF
   )
 

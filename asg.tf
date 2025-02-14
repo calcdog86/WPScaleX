@@ -9,19 +9,26 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
 
   user_data = base64encode(<<-EOF
     #!/bin/bash
-    yum update -y
-    amazon-linux-extras enable php8.0
-    yum install -y php php-mysqlnd httpd mariadb
+    dnf update -y
+    dnf install -y httpd php php-mysqli mariadb105 wget php-fpm php-json php-devel php-zip php-xml php-mbstring php-intl php-curl php-bcmath ghostscript
 
     systemctl enable httpd
     systemctl start httpd
 
-    cd /var/www/html
-    wget https://wordpress.org/latest.tar.gz
-    tar -xzf latest.tar.gz
-    mv wordpress/* .
-    rm -rf wordpress latest.tar.gz
+    usermod -a -G apache ec2-user
+    chown -R ec2-user:apache /var/www
+    chmod 2775 /var/www
+    find /var/www -type d -exec chmod 2775 {} \;
+    find /var/www -type f -exec chmod 0664 {} \;
 
+    wget https://github.com/WordPress/WordPress/archive/master.zip
+    unzip master -d /tmp/WordPress_Temp
+    mkdir -p /var/www/html/wordpress
+    cp -paf /tmp/WordPress_Temp/WordPress-master/* /var/www/html/wordpress
+    rm -rf /tmp/WordPress_Temp
+    rm -f master
+
+    cd /var/www/html/wordpress
     cp wp-config-sample.php wp-config.php
     sed -i "s/database_name_here/${aws_db_instance.wordpressDB.db_name}/" wp-config.php
     sed -i "s/username_here/admin/" wp-config.php

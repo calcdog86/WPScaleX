@@ -1,7 +1,7 @@
 resource "aws_launch_template" "TemplateForAutoScaling" {
   name_prefix   = "TemplateForAutoScaling"
   image_id      = "ami-099da3ad959447ffa" # Amazon Linux 2
-  instance_type = "t3.micro"
+  instance_type = "t2.micro"
 
   network_interfaces {
     security_groups = [aws_security_group.webSG.id]
@@ -11,6 +11,10 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
     #!/bin/bash
     dnf update -y
     dnf install -y httpd php php-mysqli mariadb105 wget php-fpm php-json php-devel php-zip php-xml php-mbstring php-intl php-curl php-bcmath ghostscript
+
+    sed -i "s/AllowOverride None/AllowOverride all/" /etc/httpd/conf/httpd.conf
+    sed -i "s/Options Indexes FollowSymLinks/Options all/" /etc/httpd/conf/httpd.conf
+    sed -i "s/Options None/Options all/" /etc/httpd/conf/httpd.conf
 
     systemctl enable httpd
     systemctl start httpd
@@ -32,7 +36,7 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
     cp wp-config-sample.php wp-config.php
     sed -i "s/database_name_here/${aws_db_instance.wordpressDB.db_name}/" wp-config.php
     sed -i "s/username_here/admin/" wp-config.php
-    sed -i "s/password_here/admin1234}/" wp-config.php
+    sed -i "s/password_here/admin1234/" wp-config.php
     sed -i "s/localhost/${aws_db_instance.wordpressDB.address}/" wp-config.php
 
     chown -R apache:apache /var/www/html

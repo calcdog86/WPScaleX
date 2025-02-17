@@ -16,5 +16,5 @@ resource "aws_db_instance" "wordpressDB" {
     username           = "admin"
     password           = "admin1234"
     db_name = "wordpressDB"
-    vpc_security_group_ids = aws_security_group.webSG.id
+    vpc_security_group_ids = [aws_security_group.webSG.id]
 }

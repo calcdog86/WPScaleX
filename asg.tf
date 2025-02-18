@@ -41,14 +41,14 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
 
     
     # BEGIN WordPress
-    echo "# BEGIN WordPress" > /var/www/html/wordpress/.htaccess
-    echo "RewriteEngine On" >> /var/www/html/wordpress/.htaccess
-    echo "RewriteBase /" >> /var/www/html/wordpress/.htaccess
-    echo "RewriteRule ^index\\.php$ - [L]" >> /var/www/html/wordpress/.htaccess
-    echo "RewriteCond %\{REQUEST_FILENAME\} !-f" >> /var/www/html/wordpress/.htaccess
-    echo "RewriteCond %\{REQUEST_FILENAME\} !-d" >> /var/www/html/wordpress/.htaccess
-    echo "RewriteRule . /index.php [L]" >> /var/www/html/wordpress/.htaccess
-    echo "# END WordPress" >> /var/www/html/wordpress/.htaccess
+    #echo "# BEGIN WordPress" > /var/www/html/wordpress/.htaccess
+    #echo "RewriteEngine On" >> /var/www/html/wordpress/.htaccess
+    #echo "RewriteBase /" >> /var/www/html/wordpress/.htaccess
+    #echo "RewriteRule ^index\\.php$ - [L]" >> /var/www/html/wordpress/.htaccess
+    #echo "RewriteCond %\{REQUEST_FILENAME\} !-f" >> /var/www/html/wordpress/.htaccess
+    #echo "RewriteCond %\{REQUEST_FILENAME\} !-d" >> /var/www/html/wordpress/.htaccess
+    #echo "RewriteRule . /index.php [L]" >> /var/www/html/wordpress/.htaccess
+    #echo "# END WordPress" >> /var/www/html/wordpress/.htaccess
     # END WordPress
 
     chown -R apache:apache /var/www/html

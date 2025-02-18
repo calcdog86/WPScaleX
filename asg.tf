@@ -39,8 +39,20 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
     sed -i "s/password_here/admin1234/" wp-config.php
     sed -i "s/localhost/${aws_db_instance.wordpressDB.address}/" wp-config.php
 
+    cat <<EOF > /var/www/html/.htaccess
+    # BEGIN WordPress
+    RewriteEngine On
+    RewriteBase /
+    RewriteRule ^index\.php$ - [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule . /index.php [L]
+    # END WordPress
+    EOF
+
     chown -R apache:apache /var/www/html
     chmod -R 755 /var/www/html
+    chmod -R 775 /var/www/html/wp-content/uploads
 
     systemctl restart httpd
   EOF

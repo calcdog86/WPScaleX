@@ -41,19 +41,20 @@ resource "aws_launch_template" "TemplateForAutoScaling" {
 
     
     # BEGIN WordPress
-    echo "# BEGIN WordPress" > /var/www/html/.htaccess
-    echo "RewriteEngine On" >> /var/www/html/.htaccess
-    echo "RewriteBase /" >> /var/www/html/.htaccess
-    echo "RewriteRule ^index\\.php$ - [L]" >> /var/www/html/.htaccess
-    echo "RewriteCond %\{REQUEST_FILENAME\} !-f" >> /var/www/html/.htaccess
-    echo "RewriteCond %\{REQUEST_FILENAME\} !-d" >> /var/www/html/.htaccess
-    echo "RewriteRule . /index.php [L]" >> /var/www/html/.htaccess
-    echo "# END WordPress" >> /var/www/html/.htaccess
+    echo "# BEGIN WordPress" > /var/www/html/wordpress/.htaccess
+    echo "RewriteEngine On" >> /var/www/html/wordpress/.htaccess
+    echo "RewriteBase /" >> /var/www/html/wordpress/.htaccess
+    echo "RewriteRule ^index\\.php$ - [L]" >> /var/www/html/wordpress/.htaccess
+    echo "RewriteCond %\{REQUEST_FILENAME\} !-f" >> /var/www/html/wordpress/.htaccess
+    echo "RewriteCond %\{REQUEST_FILENAME\} !-d" >> /var/www/html/wordpress/.htaccess
+    echo "RewriteRule . /index.php [L]" >> /var/www/html/wordpress/.htaccess
+    echo "# END WordPress" >> /var/www/html/wordpress/.htaccess
     # END WordPress
 
     chown -R apache:apache /var/www/html
     chmod -R 755 /var/www/html
-    chmod -R 775 /var/www/html/wp-content/uploads
+    chmod -R 755 /var/www/html/wordpress
+    chmod -R 775 /var/www/html/wordpress/wp-content/uploads
 
     systemctl restart httpd
   EOF

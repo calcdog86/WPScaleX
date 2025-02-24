@@ -44,7 +44,7 @@ resource "aws_security_group" "webSG" {
         protocol = -1
         cidr_blocks = ["0.0.0.0/0"]
     }
-    ingress {
+    /*ingress {
         from_port = 22
         to_port = 22
         protocol = "tcp"
@@ -52,7 +52,7 @@ resource "aws_security_group" "webSG" {
         // Do not do it in the production. 
         // Put your office or home address in it!
         cidr_blocks = ["0.0.0.0/0"]
-    }
+    }*/
     
     ingress {
         from_port = 80
